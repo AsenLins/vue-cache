@@ -16,7 +16,7 @@ class LocalStorageCache implements CacheInterface{
     delete(key:string){
         this.cache.removeItem(key)
     }
-    clear(){
+    clean(){
         Object.keys(this.cache).forEach(key=>{
             this.cache.removeItem(key);
         });

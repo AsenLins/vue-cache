@@ -6,7 +6,7 @@ interface CacheEntity{
     /**
      * 值
      */
-    value:string,
+    value:any,
     /**
      * 类型
      */
@@ -16,3 +16,5 @@ interface CacheEntity{
      */
     expired:string
 }
+
+export default CacheEntity;

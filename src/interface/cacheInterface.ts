@@ -25,7 +25,7 @@ interface Cache{
     /**
      * 清空缓存
      */
-    clear()
+    clean()
 }
 
 
