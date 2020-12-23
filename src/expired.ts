@@ -1,16 +1,11 @@
 
-import CacheEntity from './entity/CacheEntity';
+import CacheEntity from './entity/cacheEntity';
 import DataType from './enum/dateType';
-import CacheInterface from './interface/cacheInterface';
-
-interface ExpiredOptions{
-    key:string,
-    addDate:number,
-    dataType:DataType
-}
+import ExpiredOptions from './entity/expiredOptions'
+import Cache from './cache';
 
 class Expired{
-    constructor(public cache:CacheInterface){
+    constructor(public cache:Cache){
         this.cache=cache;
     }
     /**
@@ -22,22 +17,21 @@ class Expired{
         const date=new Date(cacheEntity.expired);
         const dateOptions={
             [DataType.Day](){
-                date.setDate(expiredOptions.addDate+date.getDate());
+                date.setDate(expiredOptions.addDate+date.getDate())
             },
             [DataType.Hours](){
-                date.setDate(expiredOptions.addDate+date.getHours());
+                date.setDate(expiredOptions.addDate+date.getHours())
             },
             [DataType.Minutes](){
-                date.setMinutes(expiredOptions.addDate+date.getMinutes());
+                date.setMinutes(expiredOptions.addDate+date.getMinutes())
             },
             [DataType.Month](){
-                date.setMinutes(expiredOptions.addDate+(date.getMonth()));
+                date.setMinutes(expiredOptions.addDate+(date.getMonth()))
             }
         }
-
-        dateOptions[expiredOptions.dataType].call(this);
-        
-        
+        dateOptions[expiredOptions.dataType].call(this)
+        cacheEntity.expired=date.getTime().toString()
+        this.cache.set(expiredOptions.key,this.cache.get(expiredOptions.key),new Date(cacheEntity.expired))
     }
     /**
      * 延长缓存时间(日)
@@ -92,3 +86,5 @@ class Expired{
         return this;
     }
 }
+
+export default Expired
